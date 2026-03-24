@@ -2,59 +2,42 @@ import { PrismaClient } from "@prisma/client";
 import pg from "pg";
 import dotenv from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
-
 const prisma = new PrismaClient({ adapter });
-export const departments = [
-  {
-    id: "exec",
-    name: "Executive / Management",
-    code: "EXEC",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "ops",
-    name: "Operations",
-    code: "OPS",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "fin",
-    name: "Finance and Accounting",
-    code: "FIN",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "hr",
-    name: "Human Resources (HR)",
-    code: "HR",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "csm",
-    name: "Customer Support / Marketing",
-    code: "CSM",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: "legal",
-    name: "Legal Compliance & Risk Management",
-    code: "LEGAL",
-    createdAt: new Date().toISOString(),
-  },
-];
 
 async function main() {
-  await prisma.department.createMany({
-    data: departments,
-    skipDuplicates: true,
+  const password = await bcrypt.hash("HeavenlyFather#110", 10);
+
+  const user = await prisma.user.upsert({
+    where: { email: "darkerman001@nexius.com" },
+    update: {},
+    create: {
+      email: "darkerman001@nexius.com",
+      name: "Darker Man",
+      passwordHash: password,
+      role: "ADMIN",
+      departmentId: "exec",
+      emailVerified: new Date(),
+      isFirstLogin: true,
+      remember: false,
+    },
   });
+
+  console.log("✅ Default user created:");
+  console.log("Email:", user.email);
 }
 
 main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect());
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+    await pool.end();
+  });

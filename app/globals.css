@@ -7,6 +7,8 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
+  --font-body: var(--font-inter);
+  --font-heading: var(--font-triakis);
 
   --card: #ffffff;
   --card-foreground: #000000;
@@ -49,7 +51,6 @@
   --sidebar-border: #e5e5e5;
   --sidebar-ring: #fca311;
 
-  /* extra custom tokens */
   --surface: #e5e5e5;
   --text-primary: #000000;
   --text-secondary: #14213d;
@@ -187,4 +188,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+.font-triakis {
+  font-family: var(--font-heading);
 }

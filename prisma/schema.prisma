@@ -7,15 +7,21 @@ datasource db {
 }
 
 model User {
-  id            String @id @default(cuid())
-  email         String @unique
-  name          String
-  passwordHash  String
-  role          String
-  departmentId  String
-  emailverified String
+  id           String  @id @default(cuid())
+  email        String? @unique
+  name         String?
+  passwordHash String?
+  role         Role  @default("USER")
+  image        String?
 
-  department Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+
+  emailVerified DateTime?
+  isFirstLogin  Boolean   @default(true)
+  remember      Boolean   @default(false)
+
+  sessions Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -29,4 +35,20 @@ model Department {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ADMIN
+  HR
+  STAFF
+  TEAM_LEAD
 }
