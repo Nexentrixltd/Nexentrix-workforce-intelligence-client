@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { roleRoutes } from "@/lib/utils";
-import { Role } from "@/types/types";
+import { Role } from "@/types/rbac";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();

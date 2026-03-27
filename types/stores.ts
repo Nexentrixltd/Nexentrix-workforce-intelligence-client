@@ -18,8 +18,6 @@ export type Department = {
   updatedAt: Date;
 };
 
-export type Role = "ADMIN" | "HR" | "STAFF" | "TEAM_LEAD";
-
 export type SafeUser = Omit<PrismaUser, "passwordHash">;
 export type User = PrismaUser;
 

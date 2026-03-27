@@ -6,5 +6,5 @@ type SpinnerProps = {
 };
 
 export function Spinner({ className }: SpinnerProps) {
-  return <Loader2 className={cn("h-4 w-4 animate-spin text-primary", className)} />;
+  return <Loader2 className={cn("h-4 w-4 animate-spin", className)} />;
 }

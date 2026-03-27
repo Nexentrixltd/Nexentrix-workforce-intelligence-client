@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { LoginResponse, UserStore } from "@/types/types";
+import { LoginResponse, UserStore } from "@/types/rbac";
 import { create } from "zustand";
 
 type ExtendedUserStore = UserStore & {

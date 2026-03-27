@@ -8,10 +8,10 @@ datasource db {
 
 model User {
   id           String  @id @default(cuid())
-  email        String? @unique
-  name         String?
-  passwordHash String?
-  role         Role  @default("USER")
+  email        String @unique
+  name         String
+  passwordHash String
+  role         Role  @default(STAFF)
   image        String?
 
   departmentId String

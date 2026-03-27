@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signInSchema, type SignInInput } from "@/lib/validations/auth";
-import { LoginResponse } from "@/types/types";
+import { LoginResponse } from "@/types/rbac";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 

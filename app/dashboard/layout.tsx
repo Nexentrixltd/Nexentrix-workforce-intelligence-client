@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Providers from "../providers";
 import { useUserStore } from "@/store/userStore";
 import { Spinner } from "@/components/ui/spinner";
+import DashboardSidebar from "@/components/dashboard/Sidebar";
 
 function DashboardGate({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -38,7 +39,12 @@ export default function DashboardLayout({
 }) {
   return (
     <Providers>
-      <DashboardGate>{children}</DashboardGate>
+      <DashboardGate>
+        <div className="flex min-h-screen bg-background">
+          <DashboardSidebar />
+          <main className="flex-1 overflow-y-auto">{children}</main>
+        </div>
+      </DashboardGate>
     </Providers>
   );
 }
